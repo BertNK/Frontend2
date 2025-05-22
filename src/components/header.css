@@ -1,9 +1,38 @@
 .Header{
     height: 100px;
     width: 100vw;
+    display: flex;
+    flex-direction: row;
     background-color: #A7C957;
+}
+
+.leftHeader{
+    width: 7.5%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
 .logo{
     height: 100%;
+}
+
+.middleHeader{
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.rightHeader{
+    width: 7.5%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: baseline;
+}
+
+.loginIcon{
+    height: 70%;
 }
