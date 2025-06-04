@@ -17,12 +17,15 @@ function Header() {
 
       <div className="rightHeader">
           {!isCreatePostPage && (
-          <Link to="/createPost">
-            <button className="createPost">Create Post</button>
+          <Link to="/createPost" className="createPost">
+            Create Post
           </Link>
-        )}
+          )}
 
-        <img className="loginIcon" src="/loggedout.png" alt="Login Icon" />
+          <Link to="/" className="createPost">
+            Login
+          </Link>
+
       </div>
     </div>
   );
