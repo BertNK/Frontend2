@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
   const location = useLocation();
+  const isAccountPage = location.pathname === '/account';
   const isCreatePostPage = location.pathname === '/createPost';
 
   return (
@@ -15,6 +16,7 @@ function Header() {
 
       </div>
 
+      {!isAccountPage && (
       <div className="rightHeader">
           {!isCreatePostPage && (
           <Link to="/createPost" className="createPost">
@@ -22,11 +24,12 @@ function Header() {
           </Link>
           )}
 
-          <Link to="/" className="createPost">
+          <Link to="/account" className="createPost">
             Login
           </Link>
-
       </div>
+      )}
+
     </div>
   );
 }
