@@ -12,14 +12,6 @@
   margin-bottom: 1rem;
 }
 
-.ContainerPost input[type="text"] {
-  padding: 0.5rem;
-  font-size: 1rem;
-  margin-right: 0.5rem;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-}
-
 .ContainerPost button {
   padding: 0.5rem 1rem;
   margin-left: 0.3rem;
@@ -40,15 +32,39 @@
   margin-top: 1rem;
 }
 
-.ContainerPost li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  background-color: white;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-
 .ContainerPost li span {
   flex-grow: 1;
+}
+
+.ContainerPost li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  gap: 1rem;
+}
+
+.recipe-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ContainerPost input[type="text"] {
+  padding: 0.4rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  width: 97.5%;
 }

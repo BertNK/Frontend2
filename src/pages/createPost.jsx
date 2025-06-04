@@ -16,10 +16,17 @@ function CreatePost() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newRecipeName, setNewRecipeName] = useState('');
+  const [newIngredients, setNewIngredients] = useState('');
+  const [newDuration, setNewDuration] = useState('');
+  const [newInstructions, setNewInstructions] = useState('');
   const [editingId, setEditingId] = useState(null);
-  const [editingName, setEditingName] = useState('');
+  const [editingRecipe, setEditingRecipe] = useState({
+    name: '',
+    ingredients: '',
+    duration: '',
+    instructions: ''
+  });
 
-  // read / Fetch recipes
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -36,35 +43,49 @@ function CreatePost() {
     fetchRecipes();
   }, []);
 
-  // create recipe
   const handleAddRecipe = async () => {
     if (!newRecipeName.trim()) return;
 
     try {
-      const docRef = await addDoc(collection(db, 'recipes'), { name: newRecipeName });
-      setRecipes([...recipes, { id: docRef.id, name: newRecipeName }]);
+      const docRef = await addDoc(collection(db, 'recipes'), {
+        name: newRecipeName,
+        ingredients: newIngredients,
+        duration: newDuration,
+        instructions: newInstructions
+      });
+
+      setRecipes([...recipes, {
+        id: docRef.id,
+        name: newRecipeName,
+        ingredients: newIngredients,
+        duration: newDuration,
+        instructions: newInstructions
+      }]);
+
       setNewRecipeName('');
+      setNewIngredients('');
+      setNewDuration('');
+      setNewInstructions('');
     } catch (err) {
       alert('Failed to add recipe');
     }
   };
 
-  // update recipe
   const handleUpdateRecipe = async (id) => {
-    if (!editingName.trim()) return;
+    const { name, ingredients, duration, instructions } = editingRecipe;
+    if (!name.trim()) return;
 
     try {
       const recipeDoc = doc(db, 'recipes', id);
-      await updateDoc(recipeDoc, { name: editingName });
-      setRecipes(recipes.map(r => (r.id === id ? { ...r, name: editingName } : r)));
+      await updateDoc(recipeDoc, { name, ingredients, duration, instructions });
+      setRecipes(recipes.map(r => r.id === id ? { id, name, ingredients, duration, instructions } : r));
       setEditingId(null);
-      setEditingName('');
+      setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '' });
     } catch (err) {
       alert('Failed to update recipe');
     }
   };
 
-  // delete recipe
   const handleDeleteRecipe = async (id) => {
     try {
       const recipeDoc = doc(db, 'recipes', id);
@@ -75,63 +96,63 @@ function CreatePost() {
     }
   };
 
-return (
-  <div className="justacontainer">
-    {/* header */}
-    <Header />
-    
-    <div className="ContainerPost">
+  return (
+    <div className="justacontainer">
+      <Header />
+      <div className="ContainerPost">
+        <h2>Recipes {loading ? '(L...)' : error ? `(E: ${error})` : 'C'}</h2>
 
-      <h2>Recipes {loading ? '(L...)' : error ? `(E: ${error})` : 'C'}</h2>
-      {/* add new recipe */}
-      <div>
-        <input
-          type="text"
-          placeholder="New recipe name"
-          value={newRecipeName}
-          onChange={(e) => setNewRecipeName(e.target.value)}
-        />
-        <button onClick={handleAddRecipe}>Add Recipe</button>
+        <div>
+          <input type="text" placeholder="New recipe name" value={newRecipeName} onChange={(e) => setNewRecipeName(e.target.value)} />
+          <input type="text" placeholder="Ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
+          <input type="text" placeholder="Duration" value={newDuration} onChange={(e) => setNewDuration(e.target.value)} />
+          <input type="text" placeholder="Instructions" value={newInstructions} onChange={(e) => setNewInstructions(e.target.value)} />
+          <button onClick={handleAddRecipe}>Add Recipe</button>
+        </div>
+
+        <ul>
+          {recipes.map((recipe) => (
+            <li key={recipe.id}>
+              {editingId === recipe.id ? (
+                <>
+                  <div className="recipe-content">
+                    <input type="text" value={editingRecipe.name} onChange={(e) => setEditingRecipe({ ...editingRecipe, name: e.target.value })} />
+                    <input type="text" value={editingRecipe.ingredients} onChange={(e) => setEditingRecipe({ ...editingRecipe, ingredients: e.target.value })} />
+                    <input type="text" value={editingRecipe.duration} onChange={(e) => setEditingRecipe({ ...editingRecipe, duration: e.target.value })} />
+                    <input type="text" value={editingRecipe.instructions} onChange={(e) => setEditingRecipe({ ...editingRecipe, instructions: e.target.value })} />
+                  </div>
+                  <div className="button-group">
+                    <button onClick={() => handleUpdateRecipe(recipe.id)}>Save</button>
+                    <button onClick={() => { setEditingId(null); setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '' }); }}>Cancel</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="recipe-content">
+                    <strong>{recipe.name}</strong><br />
+                    <div><em>Ingredients:</em> {recipe.ingredients || '—'}</div>
+                    <div><em>Duration:</em> {recipe.duration || '—'}</div>
+                    <div><em>Instructions:</em> {recipe.instructions || '—'}</div>
+                  </div>
+                  <div className="button-group">
+                    <button onClick={() => {
+                      setEditingId(recipe.id);
+                      setEditingRecipe({
+                        name: recipe.name,
+                        ingredients: recipe.ingredients,
+                        duration: recipe.duration,
+                        instructions: recipe.instructions
+                      });
+                    }}>Edit</button>
+                    <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
+                  </div>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
       </div>
-
-      {/* list and edit recipes */}
-      <ul>
-        {recipes.map(({ id, name }) => (
-          <li key={id}>
-            {editingId === id ? (
-              <>
-                <input
-                  type="text"
-                  value={editingName}
-                  onChange={(e) => setEditingName(e.target.value)}
-                />
-                <button onClick={() => handleUpdateRecipe(id)}>Save</button>
-                <button
-                  onClick={() => {
-                    setEditingId(null);
-                    setEditingName('');
-                  }}
-                >
-                  Cancel
-                </button>
-              </>
-            ) : (
-              <>
-                <span>{name}</span>
-                <button onClick={() => {
-                  setEditingId(id);
-                  setEditingName(name);
-                }}>
-                  Edit
-                </button>
-                <button onClick={() => handleDeleteRecipe(id)}>Delete</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
     </div>
-  </div>
   );
 }
 
