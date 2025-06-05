@@ -16,14 +16,15 @@
   padding: 0.5rem 1rem;
   margin-left: 0.3rem;
   border: none;
-  background-color: #0056b3;
-  color: white;
+  background-color: #a7c957;
+  color: black;
   border-radius: 4px;
+  transition: background-color 0.3s ease;
   cursor: pointer;
 }
 
 .ContainerPost button:hover {
-  background-color: #003976;
+  background-color: #7c9542;
 }
 
 .ContainerPost ul {

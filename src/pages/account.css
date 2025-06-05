@@ -1,0 +1,89 @@
+.account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.auth-box {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  width: 300px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.auth-box h2 {
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.auth-box input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.auth-box button {
+  background-color: #a7c957;
+  color: black;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px solid #ddd;
+
+}
+
+.auth-box button:hover {
+  background-color: #7c9542;
+}
+
+.toggle-mode {
+  text-align: center;
+  color: #555;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.auth-message {
+  margin-top: 10px;
+  color: #ff4d4f;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* login button row */
+.button-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.google-icon {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.google-icon img {
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s ease;
+  border-radius: 50px;
+}
+
+.google-icon img:hover{
+    background-color: #7c9542;
+}

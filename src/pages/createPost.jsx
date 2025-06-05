@@ -7,7 +7,8 @@ import {
   deleteDoc,
   doc
 } from 'firebase/firestore';
-import { db } from '../../firebase.jsx';
+import { db, auth } from '../../firebase.jsx';
+import { onAuthStateChanged } from 'firebase/auth';
 import Header from '../components/header.jsx';
 import "./createPost.css";
 
@@ -26,6 +27,15 @@ function CreatePost() {
     duration: '',
     instructions: ''
   });
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -45,13 +55,15 @@ function CreatePost() {
 
   const handleAddRecipe = async () => {
     if (!newRecipeName.trim()) return;
+    if (!user) return alert("You must be logged in to add a recipe.");
 
     try {
       const docRef = await addDoc(collection(db, 'recipes'), {
         name: newRecipeName,
         ingredients: newIngredients,
         duration: newDuration,
-        instructions: newInstructions
+        instructions: newInstructions,
+        madeBy: user.displayName || user.email
       });
 
       setRecipes([...recipes, {
@@ -59,7 +71,8 @@ function CreatePost() {
         name: newRecipeName,
         ingredients: newIngredients,
         duration: newDuration,
-        instructions: newInstructions
+        instructions: newInstructions,
+        madeBy: user.displayName || user.email
       }]);
 
       setNewRecipeName('');
@@ -100,7 +113,7 @@ function CreatePost() {
     <div className="justacontainer">
       <Header />
       <div className="ContainerPost">
-        <h2>Recipes {loading ? '(L...)' : error ? `(E: ${error})` : 'C'}</h2>
+        <h2>Recipes</h2>
 
         <div>
           <input type="text" placeholder="New recipe name" value={newRecipeName} onChange={(e) => setNewRecipeName(e.target.value)} />
@@ -133,6 +146,7 @@ function CreatePost() {
                     <div><em>Ingredients:</em> {recipe.ingredients || '—'}</div>
                     <div><em>Duration:</em> {recipe.duration || '—'}</div>
                     <div><em>Instructions:</em> {recipe.instructions || '—'}</div>
+                    <div><em>Made by:</em> {recipe.madeBy || 'Unknown'}</div> 
                   </div>
                   <div className="button-group">
                     <button onClick={() => {

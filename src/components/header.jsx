@@ -1,10 +1,23 @@
+// src/components/Header.jsx
 import './header.css';
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 function Header() {
   const location = useLocation();
   const isAccountPage = location.pathname === '/account';
   const isCreatePostPage = location.pathname === '/createPost';
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="Header">
@@ -17,19 +30,18 @@ function Header() {
       </div>
 
       {!isAccountPage && (
-      <div className="rightHeader">
+        <div className="rightHeader">
           {!isCreatePostPage && (
-          <Link to="/createPost" className="createPost">
-            Create Post
-          </Link>
+            <Link to="/createPost" className="createPost">
+              Create Post
+            </Link>
           )}
 
           <Link to="/account" className="createPost">
-            Login
+            {user ? 'Account' : 'Login'}
           </Link>
-      </div>
+        </div>
       )}
-
     </div>
   );
 }
