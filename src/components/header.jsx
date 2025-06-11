@@ -30,26 +30,26 @@ function Header() {
 
       </div>
 
-      {!isAccountPage && (
-        <div className="rightHeader">
-          {!isCreatePostPage && (
-            <Link to="/createPost" className="createPost">
-              Create Post
-            </Link>
-          )}
-          
-          {!isFriendsPage && (
-            <Link to="/friends" className="createPost">
-              Friends
-            </Link>
-          )}
-
-          <Link to="/account" className="createPost">
-            {user ? 'Account' : 'Login'}
+     {!isAccountPage && (
+      <div className="rightHeader">
+        {!isCreatePostPage && (
+          <Link to="/createPost" className="createPost">
+            Create Post
           </Link>
-        </div>
-      )}
-    </div>
+        )}
+        
+        {!isFriendsPage && (
+          <Link to="/friends" className="createPost">
+            Friends
+          </Link>
+        )}
+
+        <Link to={user ? "/dashboard" : "/account"} className="createPost">
+          {user ? "Dashboard" : "Login"}
+        </Link>
+      </div>
+    )}
+  </div>
   );
 }
 

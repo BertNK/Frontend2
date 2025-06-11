@@ -101,6 +101,13 @@
 }
 
 /* ===== ADDED styles for reaction section spacing ===== */
+.reaction-section{
+  max-width: 100%;
+}
+
+.recipe-content{
+  max-width: 50rem;
+}
 
 .reaction-section button {
   margin-right: 0.6rem;
@@ -139,12 +146,16 @@
   align-self: stretch;
 }
 
+.reaction-list{
+  max-width: 100%;
+}
 /* Green background for posted comments */
 .reaction-list li {
   background-color: #d4f8d4; /* light green */
   padding: 1rem 0.6rem;
   border-radius: 10px;
   margin-bottom: 0.3rem;
+  max-width: 100%;
 }
 
 /* Reaction list styling */
@@ -153,4 +164,32 @@
   padding-left: 1rem;
   font-size: 0.9rem;
   color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.reaction-item {
+  background-color: #d4f8d4;
+  padding: 0.8rem;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.reaction-text {
+  width: 100%;
+  min-width: 525px;
+  max-width: 525px;
+  height: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.reaction-meta {
+  font-size: 0.75rem;
+  color: #444;
+  margin-top: 0.4rem;
 }

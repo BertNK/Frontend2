@@ -61,23 +61,39 @@ function HomePart2() {
     fetchRecipes();
   };
 
-  const handleAddReaction = async (recipeId) => {
-    if (!user) return alert("Log in to react.");
-    const text = reactionInput[recipeId]?.trim();
-    if (!text) return;
+const handleAddReaction = async (recipeId) => {
+  const text = reactionInput[recipeId]?.trim();
+  if (!text) return;
 
-    const ref = doc(db, 'recipes', recipeId);
+  const ref = doc(db, 'recipes', recipeId);
+
+  // Build reaction object depending on user
+  const reaction = {
+    text,
+    name: user?.displayName || "Ghast",
+    email: user?.email || ""
+  };
+
+  try {
     await updateDoc(ref, {
-      reactions: arrayUnion({
-        text,
-        name: user.displayName || "No Name",
-        email: user.email || "No Email"
-      })
+      reactions: arrayUnion(reaction)
     });
 
+    // Update local state immediately without re-fetching
+    setRecipes(prevRecipes =>
+      prevRecipes.map(r =>
+        r.id === recipeId
+          ? { ...r, reactions: [...(r.reactions || []), reaction] }
+          : r
+      )
+    );
+
     setReactionInput(prev => ({ ...prev, [recipeId]: '' }));
-    fetchRecipes();
-  };
+  } catch (error) {
+    alert("Failed to add reaction.");
+  }
+};
+
 
   const soupOfTheDay = recipes.filter(r => r.name === "Soup Of The Day");
   const otherRecipes = recipes.filter(r => r.name !== "Soup Of The Day");
@@ -114,13 +130,14 @@ function HomePart2() {
             </div>
 
             {reactions.length > 0 && (
-              <ul className="reaction-list">
-                {reactions.map((r, index) => (
-                  <li key={index}>
-                    {r.text} — <em>{r.name} ({r.email})</em>
-                  </li>
-                ))}
-              </ul>
+            <ul className="reaction-list">
+              {reactions.map((r, index) => (
+                <li key={index} className="reaction-item">
+                  <div className="reaction-text">{r.text}</div>
+                  <em className="reaction-meta">{r.name} | {r.email}</em>
+                </li>
+              ))}
+            </ul>
             )}
           </div>
         </div>

@@ -59,7 +59,7 @@ function Account() {
     try {
         await signInWithEmailAndPassword(auth, email.trim(), password);
         setMessage('Login successful! Redirecting..');
-        await delay(2000); 
+        await delay(1500); 
         navigate('/');
     } catch (err) {
         setMessage('Login failed: ' + err.message);
@@ -76,7 +76,7 @@ function Account() {
         }, { merge: true });
 
         setMessage(`Logged in as ${result.user.displayName}! Redirecting..`);
-        await delay(2000); 
+        await delay(1500); 
         navigate('/');
     } catch (error) {
         setMessage('Google login failed: ' + error.message);
