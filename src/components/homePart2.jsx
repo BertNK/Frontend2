@@ -3,7 +3,7 @@ import {
   collection,
   getDocs
 } from 'firebase/firestore';
-import { db } from '../../firebase.jsx';
+import { db } from '../firebase/firebase.js';
 import '../pages/createPost.css'; // reuse styles
 import './homePart2.css';
 

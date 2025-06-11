@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase.jsx';
+import { db } from '../firebase/firebase.js';
 import Header from '../components/header.jsx';
 import './Home.css';
 import HomePart1 from '../components/homePart1.jsx';

@@ -3,12 +3,13 @@ import './header.css';
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth } from '../firebase/firebase.js';
 
 function Header() {
   const location = useLocation();
   const isAccountPage = location.pathname === '/account';
   const isCreatePostPage = location.pathname === '/createPost';
+  const isFriendsPage = location.pathname === '/friends';
 
   const [user, setUser] = useState(null);
 
@@ -34,6 +35,12 @@ function Header() {
           {!isCreatePostPage && (
             <Link to="/createPost" className="createPost">
               Create Post
+            </Link>
+          )}
+          
+          {!isFriendsPage && (
+            <Link to="/friends" className="createPost">
+              Friends
             </Link>
           )}
 

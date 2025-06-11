@@ -7,7 +7,7 @@ import {
   deleteDoc,
   doc
 } from 'firebase/firestore';
-import { db, auth } from '../../firebase.jsx';
+import { db, auth } from '../firebase/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import Header from '../components/header.jsx';
 import "./createPost.css";

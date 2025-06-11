@@ -7,7 +7,8 @@ import {
   signInWithPopup,
   updateProfile
 } from 'firebase/auth';
-import { auth, googleProvider } from '../../firebase';
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db, googleProvider } from '../firebase/firebase.js';
 import Header from '../components/header.jsx';
 import './account.css';
 import { useNavigate } from 'react-router-dom';
@@ -38,6 +39,11 @@ function Account() {
         const userCred = await createUserWithEmailAndPassword(auth, email.trim(), password);
         await updateProfile(userCred.user, { displayName: name });
 
+        await setDoc(doc(db, 'users', userCred.user.uid), {
+          displayName: name,
+          email: email,
+        });
+
         setMessage('Registration successful! Redirecting..');
         setEmail('');
         setPassword('');
@@ -63,6 +69,12 @@ function Account() {
   const handleGoogleLogin = async () => {
     try {
         const result = await signInWithPopup(auth, googleProvider);
+        
+        await setDoc(doc(db, 'users', result.user.uid), {
+          displayName: result.user.displayName,
+          email: result.user.email,
+        }, { merge: true });
+
         setMessage(`Logged in as ${result.user.displayName}! Redirecting..`);
         await delay(2000); 
         navigate('/');
