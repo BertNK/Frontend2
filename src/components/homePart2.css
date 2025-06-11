@@ -1,4 +1,4 @@
-.part2MainContainer{
+.part2MainContainer {
   width: 81.2vw;
   height: 90vh;
   max-height: 90vh;
@@ -10,7 +10,7 @@
   font-family: Arial, sans-serif;
 }
 
-.part2Containersmall{
+.part2Containersmall {
   width: 50%;
   height: 100%;
   max-height: 100%;
@@ -20,22 +20,25 @@
   border-radius: 25px;
   background-color: #d3d3d3;
 }
-/* left */
+
+/* LEFT side now visually matches right side */
+
+/* Make left block like right block */
 .part2Block1 {
   width: 90%;
-  height: 62.5%;
+  height: 95%; /* match right block */
   display: flex;
   margin: 1.5rem;
   border-radius: 25px;
-  border: 1px solid #999999;
-  flex-direction: column;
+  background-color: #999999;
   overflow-y: auto;
   padding: 0.5rem;
+  flex-direction: column;
 }
 
 .part2Block1 h2 {
-  padding: 0rem;
   padding-top: 0.5rem;
+  padding-bottom: 0;
 }
 
 .part2Block1 ul {
@@ -44,7 +47,8 @@
   margin-top: 1rem;
 }
 
-.part2Block1 li {
+.part2Block1 li,
+.part2Block3 li {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -56,55 +60,97 @@
   width: 94%;
 }
 
-.part2Block1 p {
+.part2Block1 p,
+.part2Block3 p {
   padding-left: 0.2rem;
 }
 
-/* Scrollbar matching right block */
-.part2Block1::-webkit-scrollbar {
-  width: 8px;
-}
-.part2Block1::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 8px;
-}
-.part2Block1::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.part2Block2{
-    width: 90%;
-    height: 32.5%;
-    display: flex;
-    margin: 1.5rem;
-    border-radius: 25px;
-    background-color: #999999;
-}
-/* right */
-.part2Block3{
-    width: 90%;
-    height: 95%;
-    display: flex;
-    margin: 1.5rem;
-    border-radius: 25px;
-    background-color: #999999;
-    overflow-y: auto;
-    padding: 0.5rem;
-    flex-direction: column;
-}
-
-.part2Block3 h2{
-  padding-bottom: 0rem;
-  padding-top: 0.5rem;
-}
-
+.part2Block1::-webkit-scrollbar,
 .part2Block3::-webkit-scrollbar {
   width: 8px;
 }
+
+.part2Block1::-webkit-scrollbar-thumb,
 .part2Block3::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 8px;
 }
+
+.part2Block1::-webkit-scrollbar-thumb:hover,
 .part2Block3::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* RIGHT side styles */
+
+.part2Block3 {
+  width: 90%;
+  height: 95%;
+  display: flex;
+  margin: 1.5rem;
+  border-radius: 25px;
+  background-color: #999999;
+  overflow-y: auto;
+  padding: 0.5rem;
+  flex-direction: column;
+}
+
+.part2Block3 h2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+}
+
+/* ===== ADDED styles for reaction section spacing ===== */
+
+.reaction-section button {
+  margin-right: 0.6rem;
+  margin-top: 0;
+}
+
+.reaction-section > button {
+  margin-top: 0.6rem;
+}
+
+/* Make the React button same height as thumbs buttons, and inline next to input */
+.reaction-section > div {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  align-items: stretch; /* ensure children stretch vertically */
+}
+
+.reaction-section input[type="text"] {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  height: 1.65rem; /* match typical button height */
+}
+
+.reaction-section button.react-btn {
+  padding: 0 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #a7c957;
+  height: 2.5rem; /* match height of thumbs up/down buttons */
+  align-self: stretch;
+}
+
+/* Green background for posted comments */
+.reaction-list li {
+  background-color: #d4f8d4; /* light green */
+  padding: 1rem 0.6rem;
+  border-radius: 10px;
+  margin-bottom: 0.3rem;
+}
+
+/* Reaction list styling */
+.reaction-list {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  font-size: 0.9rem;
+  color: #222;
 }

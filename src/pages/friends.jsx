@@ -113,10 +113,17 @@ function Friends() {
           const friendUser = users.find(u => u.uid === friendUid);
           return (
             <li key={friendUid}>
-              {friendUser ? (friendUser.displayName || friendUser.email) : friendUid}
+              {friendUser ? (
+                <>
+                  <strong>{friendUser.displayName || 'No Name'}</strong> – {friendUser.email}
+                </>
+              ) : (
+                <>Loading friend info...</>
+              )}
             </li>
           );
         })}
+
       </ul>
     </div>
   );
