@@ -75,56 +75,62 @@ function Friends() {
   }
 
   return (
-    <div className="FriendContainer">
+    <div className="FriendOuterContainer">
       <Header />
 
-      <h2>All Users</h2>
-      <ul>
-        {users
-          .filter(u => u.uid !== user.uid)
-          .map(u => (
-            <li key={u.uid}>
-              {u.displayName || u.email || 'No Name'}
-              {friends.includes(u.uid) ? (
-                <span> ✔️ Friend</span>
-              ) : (
-                <button onClick={() => handleSendRequest(u.uid)}>Add Friend</button>
-              )}
-            </li>
-          ))}
-      </ul>
+      <div className="FriendContainer">
+        <div className="FriendBlock">
+          <h2>All Users</h2>
+          <ul>
+            {users
+              .filter(u => u.uid !== user.uid)
+              .map(u => (
+                <li key={u.uid} className="friend-list-item">
+                  <span>{u.displayName || u.email || 'No Name'}</span>
+                  {friends.includes(u.uid) ? (
+                    <span className="friend-status">✔️ Friend</span>
+                  ) : (
+                    <button onClick={() => handleSendRequest(u.uid)}>Add Friend</button>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
+        <div className="FriendBlock">
+          <h2>Friend Requests</h2>
+          <ul>
+            {requests.length === 0 && <li>No pending friend requests</li>}
+            {requests.map(req => (
+              <li key={req.from}>
+                Request from: {req.from}
+                <button onClick={() => handleRespondToRequest(req.from, true)}>Accept</button>
+                <button onClick={() => handleRespondToRequest(req.from, false)}>Reject</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="FriendBlock">
+          <h2>Friends</h2>
+          <ul>
+            {friends.length === 0 && <li>No friends yet</li>}
+            {friends.map(friendUid => {
+              const friendUser = users.find(u => u.uid === friendUid);
+              return (
+                <li key={friendUid}>
+                  {friendUser ? (
+                    <>
+                      <strong>{friendUser.displayName || 'No Name'}</strong> – {friendUser.email}
+                    </>
+                  ) : (
+                    <>Loading friend info...</>
+                  )}
+                </li>
+              );
+            })}
 
-      <h2>Friend Requests</h2>
-      <ul>
-        {requests.length === 0 && <li>No pending friend requests</li>}
-        {requests.map(req => (
-          <li key={req.from}>
-            Request from: {req.from}
-            <button onClick={() => handleRespondToRequest(req.from, true)}>Accept</button>
-            <button onClick={() => handleRespondToRequest(req.from, false)}>Reject</button>
-          </li>
-        ))}
-      </ul>
-
-      <h2>Friends</h2>
-      <ul>
-        {friends.length === 0 && <li>No friends yet</li>}
-        {friends.map(friendUid => {
-          const friendUser = users.find(u => u.uid === friendUid);
-          return (
-            <li key={friendUid}>
-              {friendUser ? (
-                <>
-                  <strong>{friendUser.displayName || 'No Name'}</strong> – {friendUser.email}
-                </>
-              ) : (
-                <>Loading friend info...</>
-              )}
-            </li>
-          );
-        })}
-
-      </ul>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

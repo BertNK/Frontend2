@@ -1,5 +1,39 @@
+.FriendOuterContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.FriendContainer{
+  font-family: Arial, sans-serif;
+  display: flex;
+  width: 90vw;
+  height: auto;
+  min-height: 60vh;
+  display: flex;
+  margin: 1rem auto 2rem auto; /* separate from header, centered */
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  padding: 1.5rem 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.FriendBlock{
+  width: 33%;
+  min-height: 60vh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .FriendContainer h2 {
   margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 .FriendContainer ul {
   list-style: none;
@@ -9,6 +43,33 @@
   margin: 0.5rem 0;
 }
 .FriendContainer button {
-  margin-left: 1rem;
-  padding: 0.3rem 0.6rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: fit-content;
+  transition: background-color 0.3s ease;
+  background-color: #4caf50;
+  color: white;
+  margin-top: 0.8rem;
 }
+
+.FriendContainer button:hover {
+  background-color: #388e3c;
+}
+
+.friend-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.friend-list-item span,
+.friend-list-item button {
+  max-width: 40%;
+  word-break: break-word;
+}
+

@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: row;
     background-color: #A7C957;
+    font-family: Arial, sans-serif;
 }
 
 .leftHeader{

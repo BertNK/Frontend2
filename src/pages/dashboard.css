@@ -1,9 +1,9 @@
 /* Container box below header, no padding on main */
 .dashboardContainer {
   width: 80vw;
-  height: 50vh;
+  height: 80vh;
   margin: 1rem auto 2rem auto; /* separate from header, centered */
-  background-color: #f5f5f5;
+  background-color: #d3d3d3;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   padding: 1.5rem 2rem;

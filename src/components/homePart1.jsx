@@ -13,10 +13,6 @@ function HomePart1() {
       img: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1600&q=80',
       link: 'https://unsplash.com/photos/VFGEZ4z8zOw',
     },
-    {
-      img: 'https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?auto=format&fit=crop&w=1600&q=80',
-      link: 'https://unsplash.com/photos/pElSkGRA2NU',
-    },
   ];
 
   const handlePrev = () => {
