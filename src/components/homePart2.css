@@ -193,3 +193,16 @@
   color: #444;
   margin-top: 0.4rem;
 }
+
+/* searchbar */
+
+.recipe-search {
+  margin: 0.5rem 0 1rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 95%;
+  max-width: 30rem;
+  align-self: center;
+}

@@ -1,7 +1,7 @@
 /* Container box below header, no padding on main */
 .dashboardContainer {
   width: 80vw;
-  height: 80vh;
+  height: 82vh;
   margin: 1rem auto 2rem auto; /* separate from header, centered */
   background-color: #d3d3d3;
   border-radius: 10px;

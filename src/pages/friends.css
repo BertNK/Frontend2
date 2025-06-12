@@ -73,3 +73,15 @@
   word-break: break-word;
 }
 
+.private-label {
+  color: #888;
+  font-style: italic;
+  font-size: 0.9rem;
+  margin-left: 0.3rem;
+}
+
+.friend-status {
+  margin-left: 0.5rem;
+  font-size: 0.95rem;
+  color: #4caf50;
+}

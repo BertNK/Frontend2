@@ -18,6 +18,7 @@ function HomePart2() {
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [reactionInput, setReactionInput] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
@@ -96,7 +97,14 @@ const handleAddReaction = async (recipeId) => {
 
 
   const soupOfTheDay = recipes.filter(r => r.name === "Soup Of The Day");
-  const otherRecipes = recipes.filter(r => r.name !== "Soup Of The Day");
+  const otherRecipes = recipes
+    .filter(r => r.name !== "Soup Of The Day")
+    .filter(r =>
+      r.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.ingredients?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.instructions?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.madeBy?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const renderRecipe = (recipe) => {
     const likes = recipe.likes?.length || 0;
@@ -162,6 +170,13 @@ const handleAddReaction = async (recipeId) => {
       <div className="part2Containersmall">
         <div className="part2Block3 ContainerPost">
           <h2>Recipes</h2>
+          <input
+            type="text"
+            placeholder="Search recipes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="recipe-search"
+          />
           <ul>
             {otherRecipes.length > 0
               ? otherRecipes.map(renderRecipe)

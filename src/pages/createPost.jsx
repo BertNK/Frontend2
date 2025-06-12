@@ -20,12 +20,14 @@ function CreatePost() {
   const [newIngredients, setNewIngredients] = useState('');
   const [newDuration, setNewDuration] = useState('');
   const [newInstructions, setNewInstructions] = useState('');
+  const [newPrice, setNewPrice] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editingRecipe, setEditingRecipe] = useState({
     name: '',
     ingredients: '',
     duration: '',
-    instructions: ''
+    instructions: '',
+    price: ''
   });
   const [user, setUser] = useState(null);
 
@@ -35,7 +37,6 @@ function CreatePost() {
     });
     return () => unsubscribe();
   }, []);
-
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -63,6 +64,7 @@ function CreatePost() {
         ingredients: newIngredients,
         duration: newDuration,
         instructions: newInstructions,
+        price: newPrice,
         madeBy: user.displayName || user.email
       });
 
@@ -72,6 +74,7 @@ function CreatePost() {
         ingredients: newIngredients,
         duration: newDuration,
         instructions: newInstructions,
+        price: newPrice,
         madeBy: user.displayName || user.email
       }]);
 
@@ -79,21 +82,22 @@ function CreatePost() {
       setNewIngredients('');
       setNewDuration('');
       setNewInstructions('');
+      setNewPrice('');
     } catch (err) {
       alert('Failed to add recipe');
     }
   };
 
   const handleUpdateRecipe = async (id) => {
-    const { name, ingredients, duration, instructions } = editingRecipe;
+    const { name, ingredients, duration, instructions, price } = editingRecipe;
     if (!name.trim()) return;
 
     try {
       const recipeDoc = doc(db, 'recipes', id);
-      await updateDoc(recipeDoc, { name, ingredients, duration, instructions });
-      setRecipes(recipes.map(r => r.id === id ? { id, name, ingredients, duration, instructions } : r));
+      await updateDoc(recipeDoc, { name, ingredients, duration, instructions, price });
+      setRecipes(recipes.map(r => r.id === id ? { id, name, ingredients, duration, instructions, price } : r));
       setEditingId(null);
-      setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '' });
+      setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '', price: '' });
     } catch (err) {
       alert('Failed to update recipe');
     }
@@ -120,6 +124,7 @@ function CreatePost() {
           <input type="text" placeholder="Ingredients" value={newIngredients} onChange={(e) => setNewIngredients(e.target.value)} />
           <input type="text" placeholder="Duration" value={newDuration} onChange={(e) => setNewDuration(e.target.value)} />
           <input type="text" placeholder="Instructions" value={newInstructions} onChange={(e) => setNewInstructions(e.target.value)} />
+          <input type="text" placeholder="Price" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} />
           <button onClick={handleAddRecipe}>Add Recipe</button>
         </div>
 
@@ -133,10 +138,14 @@ function CreatePost() {
                     <input type="text" value={editingRecipe.ingredients} onChange={(e) => setEditingRecipe({ ...editingRecipe, ingredients: e.target.value })} />
                     <input type="text" value={editingRecipe.duration} onChange={(e) => setEditingRecipe({ ...editingRecipe, duration: e.target.value })} />
                     <input type="text" value={editingRecipe.instructions} onChange={(e) => setEditingRecipe({ ...editingRecipe, instructions: e.target.value })} />
+                    <input type="text" value={editingRecipe.price} onChange={(e) => setEditingRecipe({ ...editingRecipe, price: e.target.value })} />
                   </div>
                   <div className="button-group">
                     <button onClick={() => handleUpdateRecipe(recipe.id)}>Save</button>
-                    <button onClick={() => { setEditingId(null); setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '' }); }}>Cancel</button>
+                    <button onClick={() => {
+                      setEditingId(null);
+                      setEditingRecipe({ name: '', ingredients: '', duration: '', instructions: '', price: '' });
+                    }}>Cancel</button>
                   </div>
                 </>
               ) : (
@@ -146,7 +155,8 @@ function CreatePost() {
                     <div><em>Ingredients:</em> {recipe.ingredients || '—'}</div>
                     <div><em>Duration:</em> {recipe.duration || '—'}</div>
                     <div><em>Instructions:</em> {recipe.instructions || '—'}</div>
-                    <div><em>Made by:</em> {recipe.madeBy || 'Unknown'}</div> 
+                    <div><em>Price:</em> {recipe.price || '—'}</div>
+                    <div><em>Made by:</em> {recipe.madeBy || 'Unknown'}</div>
                   </div>
                   <div className="button-group">
                     <button onClick={() => {
@@ -155,7 +165,8 @@ function CreatePost() {
                         name: recipe.name,
                         ingredients: recipe.ingredients,
                         duration: recipe.duration,
-                        instructions: recipe.instructions
+                        instructions: recipe.instructions,
+                        price: recipe.price
                       });
                     }}>Edit</button>
                     <button onClick={() => handleDeleteRecipe(recipe.id)}>Delete</button>
